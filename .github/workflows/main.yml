@@ -1,0 +1,18 @@
+name: Trigger Main Repo Build
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger main repo
+        run: |
+          curl -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.MAIN_REPO_TOKEN }}" \
+          https://api.github.com/repos/amnbkr/MainApp/dispatches \
+          -d '{"event_type":"submodule-updated"}'
